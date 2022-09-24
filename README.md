@@ -123,3 +123,102 @@ if variable value terraform didnt find then it will ask for the value
 terraform has multiple providers ex: aws,azure,gcp,github etc
 every provider has version 
 if provider version not provided it will take latest version
+
+#modules : like functions (reusable)
+you cannot share the data from one module to other module,this can be done using root module
+
+#loops
+count : this is the keyword for loop
+this is normal loop (count =2) accessing ${count.index}
+
+foreach: 
+
+for_each argument whose value is a map or a set of strings
+
+Version note: for_each was added in Terraform 0.12.6.
+Module support for for_each was added in Terraform 0.13;
+previous versions can only use it with resources.
+
+to set
+======
+resource "aws_instance" "web" {
+    #loop from variable loop to create 2 instances and converting toset
+    for_each = toset(var.sample)
+    ami = "ami-066f46167f3ce8bfe"
+    instance_type = "t3.micro"
+
+    tags = {
+        Name = each.key
+    }
+ 
+
+  
+}
+
+variable "sample" {
+    default = ["one", "two"]
+  
+}
+
+map
+===
+resource "aws_instance" "web" {
+    #loop from variable to create 2 instances using map
+    for_each = var.sample
+    ami = "ami-066f46167f3ce8bfe"
+    #accessing variable values from map using value
+    instance_type = each.value
+
+    tags = {
+        #accessing values
+        Name = each.key
+    }
+ 
+
+  
+}
+
+variable "sample" {
+    default = {
+        one = "t3.micro"
+        two = "t3.medium"
+
+    }
+  
+}
+
+map of map(important-realtime use case)
+========================================
+resource "aws_instance" "web" {
+    #loop from variable to create 2 instances using map
+    for_each = var.sample
+    ami = "ami-066f46167f3ce8bfe"
+    #accessing variable values from map using with iteration
+    instance_type = each.value["type"]
+
+    tags = {
+        #accessing values with iteration
+
+        Name = each.value["name"]
+    }
+ 
+
+  
+}
+
+variable "sample" {
+    default = {
+        one = {
+            type = "t3.micro"
+            name = "one"
+        }
+
+        two = {
+            type = "t3.medium"
+            name = "two"
+
+        }
+
+    }
+  
+}
