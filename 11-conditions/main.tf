@@ -3,12 +3,6 @@ resource "aws_instance" "web" {
     #if any value is not given(default value is null),then pickup t3.micro,if not null pickup 
     #value given by user
     instance_type = var.instance_type == null ? "t3.micro" : var.instance_type
-
-    tags = {
-      #access values from iteration
-      Name = "sample-${count.index}"
-    }
- 
     
   
 }
