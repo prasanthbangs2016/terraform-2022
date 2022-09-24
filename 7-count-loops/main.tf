@@ -5,7 +5,7 @@ resource "aws_instance" "web" {
 
     tags = {
       #access values from iteration
-      "name" = "sample-${count.index}"
+      Name = "sample-${count.index}"
     }
  
 
