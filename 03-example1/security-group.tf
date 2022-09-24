@@ -14,7 +14,7 @@ resource "aws_security_group" "web" {
     #ipv6_cidr_blocks = [aws_vpc.main.ipv6_cidr_block]
     
   }
-ingress {
+  ingress {
     description      = "HTTP"
     from_port        = 80
     to_port          = 80
@@ -25,7 +25,7 @@ ingress {
     
   }
 
-ingress {
+  ingress {
     description      = "All"
     from_port        = 0
     to_port          = 65535
