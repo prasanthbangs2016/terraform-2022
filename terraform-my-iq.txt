@@ -57,6 +57,49 @@ terraform console
 > lower("HELLO")
 "hello"
 
+#provisioners
+===============
+are used to execute certain tasks after the resource creation
+ex: connect to instance and perform/execute commands on that instance/copy somefile
+
+provsioner is always sub block of resource
+
+we can make multiple provisioners and provisioner types in the same resource
+
+#example
+=======
+1st time i have created resource and with null resource and provisioner i have executed something -this is done.
+2nd time i have modified the command in provisioner if i rerun what happens..?
+sol: changes wont get detected by default,reasons as follows
+     terraform refers the state file and they dont detect the changes
+     and,terraform thinks that null resource is already created and main resource too.
+
+in order detect the changes we have to add "trigger" property
+
+resource "null_resource" "cli" {
+
+    triggers = {
+      #every time to run the provisioner
+      abc = timestamp()
+    }
+
+    provisioner "remote-exec" {
+    connection {
+      host = aws_instance.web.public_ip
+      user   = "root"
+      password = "DevOps321"
+    }
+    #inline is list of commands
+    inline = [
+      "echo Hey Buddy",
+      "echo Welcome Terraform Learning 2022"
+      
+    ]
+  }
+
+
+}
+
 
 
 
