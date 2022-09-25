@@ -23,6 +23,7 @@ resource "aws_route53_record" "record" {
 }
 
 resource "null_resource" "ansible_apply" {
+  count     = length(var.components)
   provisioner "remote-exec" {
     connection {
       host = aws_instance.application.*.public_ip[count.index]
