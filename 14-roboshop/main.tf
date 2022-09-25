@@ -6,8 +6,6 @@ resource "aws_instance" "application" {
     instance_type = "t3.micro"
 
     tags = {
-      Name = "${var.components["${"count.index"]}-dev"
+      Name = "${var.components["${count.index}"]}-dev"
     }
-
 }
-
