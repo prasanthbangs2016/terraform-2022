@@ -4,9 +4,9 @@ resource "aws_instance" "application" {
     #pulling from data resource
     ami = data.aws_ami.ami.image_id
     instance_type = "t3.micro"
-    iam_instance_iam_instance_profile = "Secretmanager-readonly-access-for-roboshop-nodes"
+    iam_instance_profile = "Secretmanager-readonly-access-for-roboshop-nodes"
 
-    tags = {
+tags = {
       Name = "${var.components["${count.index}"]}-dev"
     }
 }
