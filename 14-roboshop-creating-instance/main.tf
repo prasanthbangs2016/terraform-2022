@@ -5,6 +5,7 @@ resource "aws_instance" "application" {
     ami = data.aws_ami.ami.image_id
     instance_type = "t3.micro"
     iam_instance_profile = "Secretmanager-readonly-access-for-roboshop-nodes"
+    vpc_security_group_ids = ["sg-0a660dbc66353e4f6"]
 
 tags = {
       Name = "${var.components["${count.index}"]}-dev"
