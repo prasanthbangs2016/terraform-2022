@@ -33,6 +33,11 @@ resource "aws_instance" "web" {
 
 resource "null_resource" "cli" {
 
+    triggers = {
+      #every time to run the provisioner
+      abc = timestamp()
+    }
+
     provisioner "remote-exec" {
     connection {
       host = aws_instance.web.public_ip
