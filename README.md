@@ -222,3 +222,71 @@ variable "sample" {
     }
   
 }
+
+#condition
+=========
+resource "aws_instance" "web" {
+    ami = "ami-066f46167f3ce8bfe"
+    #if any value is not given(default value is null),then pickup t3.micro,if not null pickup 
+    #value given by user
+    instance_type = var.instance_type == null ? "t3.micro" : var.instance_type
+	#below is the syntax
+	#instance_type = var.instance_type == condition ? true_val : false
+    
+  
+}
+
+variable "instance_type" {
+    default = null
+  
+}
+
+
+#terraform plan -var instance_type="t3.medium"
+#terraform apply -var instance_type="t3.medium"
+
+
+#functions
+===========
+convert to upper case
+cut a string
+add some number
+
+functions can be used with arguments in resource and modules also.
+
+terraform console
+
+> lower("HELLO")
+"hello"
+
+> max(5, 12, 9)
+12
+
+#provisioners
+===============
+are used to execute certain tasks after the resource creation
+ex: connect to instance and perform/execute commands on that instance/copy somefile
+
+provsioner is always sub block of resource
+
+we can make multiple provisioners and provisioner types in the same resource
+
+https://www.terraform.io/language/resources/provisioners/syntax
+
+#File Provisioner:
+The file provisioner copies files or directories from the machine running Terraform to the newly created resource.
+
+The file provisioner supports both ssh and winrm type connections.
+
+#local-exec Provisioner
+
+#remote-exec Provisioner
+The remote-exec provisioner invokes a script on a remote resource after it is created.
+The remote-exec provisioner requires a connection and supports both ssh and winrm
+This can be used to run a configuration management tool,
+bootstrap into a cluster, etc. To invoke a local process,
+see the local-exec provisioner instead.
+
+
+
+

@@ -12,3 +12,6 @@ variable "instance_type" {
   
 }
 
+
+#terraform plan -var instance_type="t3.medium"
+#terraform apply -var instance_type="t3.medium"

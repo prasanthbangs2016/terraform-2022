@@ -1,0 +1,62 @@
+Q-how do share data between module..?
+sol- using "output"
+
+Q-Terraform workflow..?
+init,plan and apply
+
+
+Q-provisioned webapp using terraform,again renamed the webapp name,what happens..? will it destroys and recreate..?
+sol- no it will not destroy and recreate,it will just update the name
+during the plan it shows what is changed.
+
+
+Q-#manually telling to terraform variable values
+terraform apply -auto-approve -var-file dev.tfvars
+
+#precedence of variables
+#high priority ---(top to down)-----------------#low priority
+-var (commandline
+-var-file (commnad line)
+*auto.tfvars (automatic)
+terraform.tfvars (automatic)
+SHELL
+ENV
+VARS
+
+if variable value terraform didnt find then it will ask for the value
+
+#can we deal multiple providers at a time..?
+yes
+
+
+#provider
+terraform has multiple providers ex: aws,azure,gcp,github etc
+every provider has version 
+if provider version not provided it will take latest version
+
+# you have same provider(aws), u have 2 aws accounts or multiple regions,and u want to create resources in both the accounts or regions, how do u deal with it..?
+using alias, need to add alias to resource
+
+#diff btw refresh vs import
+
+#map
+this comes in for each loop
+
+#in terraform class i remember one of the learner had asked that instead of dev state file knowingly or unknowingly pointed to prod state file, since we had backend as s3, will there b possible to restore the statefile,would it possible to restore..?
+sol- versioning or cross region replication
+
+#terraform console
+The terraform console command provides an interactive console for evaluating expressions.
+
+example
+=======
+terraform console
+> max(5, 12, 9)
+12
+
+> lower("HELLO")
+"hello"
+
+
+
+
