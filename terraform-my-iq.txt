@@ -116,6 +116,43 @@ output "instances" {
 }
 
 
+#creating multiple instances at a time
+
+main.tf
+resource "aws_instance" "application" {
+
+    count = length(var.components)
+    #pulling from data resource
+    ami = data.aws_ami.ami.image_id
+    instance_type = "t3.micro"
+
+    tags = {
+      Name = "${var.components["${"count.index"]}-dev"
+   #terraform needs as a variable(${var.components)
+   #loop count is also as variable(["${"count.index"]}-dev")
+    }
+
+}
+s
+
+
+vars.tf
+variable "components" {
+    default = ["frontend", "catalogue", "cart", "user", "shipping", "payment", "mongodb", "redis", "mysql", "rabbitmq"]
+  
+}
+
+data.tf
+#getting ami id
+data "aws_ami" "ami" {
+    most_recent = true
+    name_regex  = "devops-practice-centos-with-ansible"
+    owners      = ["self"]
+  
+}
+
+
+
 
 
 
