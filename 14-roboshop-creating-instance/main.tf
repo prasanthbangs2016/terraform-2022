@@ -36,6 +36,7 @@ resource "null_resource" "ansible_apply" {
 
     }
     inline = [
+      "sudo labauto clean",
       "ansible-pull -i localhost, -U https://github.com/prasanthbangs2016/roboshop-mutable-ansible roboshop.yml  -e HOSTS=localhost -e APP_COMPONENT_ROLE=${var.components[count.index]} -e ENV=dev -e MYSQL_PASSWORD=Roboshop@1 -e RABBITMQ_PASSWORD=roboshop123"
 
     ]
