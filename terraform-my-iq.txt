@@ -100,6 +100,21 @@ resource "null_resource" "cli" {
 
 }
 
+#dataresource
+is to refer existing resources in the provider
+q-display instance which are running from terraform
+sol-
+
+data "aws_instances" "test" {}
+
+#display instances which are running
+output "instances" {
+    value = data.aws_instances.test
+  
+}
+
+
+
 
 
 
