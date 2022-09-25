@@ -26,12 +26,12 @@ resource "null_resource" "ansible_apply" {
   provisioner "remote-exec" {
     connection {
       host = aws_instance.application.*.public_ip[count.index]
-      user = root
+      user = "root"
       password = "DevOps321"
 
     }
     inline = [
-      "ansible-pull -i localhost , -U https://github.com/prasanthbangs2016/roboshop-mutable-ansible roboshop.yml  -e HOSTS=${var.components[count.index]} -e APP_COMPONENT_ROLE=${var.components[count.index]} -e ENV=dev -e MYSQL_PASSWORD=Roboshop@1 -e RABBITMQ_PASSWORD=roboshop123"
+      "ansible-pull -i localhost, -U https://github.com/prasanthbangs2016/roboshop-mutable-ansible roboshop.yml  -e HOSTS=${var.components[count.index]} -e APP_COMPONENT_ROLE=${var.components[count.index]} -e ENV=dev -e MYSQL_PASSWORD=Roboshop@1 -e RABBITMQ_PASSWORD=roboshop123"
 
     ]
 
