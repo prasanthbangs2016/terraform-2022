@@ -286,6 +286,65 @@ The remote-exec provisioner requires a connection and supports both ssh and winr
 This can be used to run a configuration management tool,
 bootstrap into a cluster, etc. To invoke a local process,
 see the local-exec provisioner instead.
+#example
+resource "aws_instance" "web" {
+  ami                    = "ami-066f46167f3ce8bfe"
+  instance_type          = "t3.micro"
+  vpc_security_group_ids = ["sg-0a660dbc66353e4f6"]
+
+  #specified connection details
+
+  provisioner "remote-exec" {
+    connection {
+      host = self.public_ip
+      user   = "root"
+      password = "DevOps321"
+    }
+    #inline is list of commands
+    inline = [
+      "echo Hey Buddy",
+      "echo Welcome Terraform Learning 2022"
+      
+    ]
+  }
+
+}
+#output from terraform apply
+
+aws_instance.web (remote-exec): Connected!
+aws_instance.web (remote-exec): Hey Buddy
+aws_instance.web (remote-exec): Welcome Terraform Learning 2022
+
+#null resource : it is resource to execute commands using provisioners
+#best practice to use this
+resource "aws_instance" "web" {
+  ami                    = "ami-066f46167f3ce8bfe"
+  instance_type          = "t3.micro"
+  vpc_security_group_ids = ["sg-0a660dbc66353e4f6"]
+  
+}
+
+resource "null_resource" "cli" {
+
+    provisioner "remote-exec" {
+    connection {
+      host = aws_instance.web.public_ip
+      user   = "root"
+      password = "DevOps321"
+    }
+    #inline is list of commands
+    inline = [
+      "echo Hey Buddy",
+      "echo Welcome Terraform Learning 2022"
+      
+    ]
+  }
+
+
+}
+
+
+
 
 
 
